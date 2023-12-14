@@ -4,3 +4,5 @@ class Person:
         self.Alder = Alder
         self.telefon = telefon
         self.Epost = Epost
+
+
