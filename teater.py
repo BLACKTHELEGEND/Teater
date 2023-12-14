@@ -1,5 +1,6 @@
 sebastian
 Y
+R
 class Person:
     def __init__(self, Navn, Alder, telefon, Epost):
         self.Navn = Navn
