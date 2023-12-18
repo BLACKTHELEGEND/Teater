@@ -2,7 +2,7 @@ class Person:
     def __init__(self, Navn, Alder, telefonNr, Epost):
         self.Navn = Navn
         self.Alder = Alder 
-        self.telefonNr = telefonNr
+        self.telefonNr = telefonNr 
         self.Epost = Epost
 
 class Biletter(Person):
