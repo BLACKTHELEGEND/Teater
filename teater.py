@@ -61,3 +61,168 @@ class Sal:
     def __init__(self, navn, kapasitet):
         self.navn = navn
         self.kapasitet = kapasitet
+
+
+
+#Version 2
+
+import datetime
+
+class Person:
+    def __init__(self, navn, alder, telefonNr, epost):
+        self.navn = navn
+        self.alder = alder
+        self.telefonNr = telefonNr
+        self.epost = epost
+
+class Biletter(Person):
+    idAlene = 0
+    idGruppe = 0
+    def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBiletter:int=1):
+        super().__init__(navn, alder, telefonNr, epost)
+        self.ordinarPris = 300
+        self.antallBiletter = antallBiletter
+        self.dato = dato
+        self.erStudent = erStudent
+        self.stykke = stykke
+        self.pris = 0
+
+
+    def bergnPris(self):
+        if self.antallBiletter == 1:
+            rabatt = 1
+            if self.alder < 10:
+                rabatt -= 0.5
+            elif self.alder > 67:
+                rabatt -= 0.3
+            elif self.erStudent == 'ja':
+                rabatt -=0.2
+            
+            self.pris = self.ordinarPris*rabatt
+            return self.pris
+        elif self.antallBiletter > 1:
+            pris = 0
+
+            rabattP = 1
+            if self.alder < 10:
+                rabattP -= 0.5
+            elif self.alder > 67:
+                rabattP -= 0.3
+            elif self.erStudent == 'ja':
+                rabattP -=0.2
+            pris += self.ordinarPris*rabattP
+
+            for i in range(2,self.antallBiletter+1):
+                Alder_erStudent = int(input(f'Hei skriv alderen til person{i}: '))
+                rabatt = 1
+                if Alder_erStudent < 10:
+                    rabatt -= 0.5
+                elif Alder_erStudent > 67:
+                    rabatt -= 0.3
+                pris += self.ordinarPris*rabatt
+            self.pris = pris
+            return self.pris
+    
+    def visKvittering(self):
+        print(f'Biletten under {self.navn} er følgende:\n\tNanv: {self.navn}\n\tAlder: {self.alder}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall biletter: {self.antallBiletter}\n\tTotal pris: {self.bergnPris()}')
+
+class GruppeBiletter(Biletter):
+    idAlene = 0
+    idGruppe = 0
+    totPris = 0
+    def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBiletter:int=1):
+        super().__init__(navn, alder, telefonNr, epost,stykke,dato,erStudent,antallBiletter)
+        self.pris = GruppeBiletter.totPris
+
+
+    def bergnPris(self):
+            pris = 0
+
+            rabattP = 1
+            if self.alder < 10:
+                rabattP -= 0.5
+            elif self.alder > 67:
+                rabattP -= 0.3
+            elif self.erStudent == 'ja':
+                rabattP -=0.2
+            pris += self.ordinarPris*rabattP
+
+            for i in range(2,self.antallBiletter+1):
+                Alder_erStudent = int(input(f'Hei skriv alderen til person{i}: '))
+                rabatt = 1
+                if Alder_erStudent < 10:
+                    rabatt -= 0.5
+                elif Alder_erStudent > 67:
+                    rabatt -= 0.3
+                pris += self.ordinarPris*rabatt
+            GruppeBiletter.totPris = pris
+            return self.pris
+    
+    def visKvittering(self):
+        print(f'Biletten under {self.navn} er følgende:\n\tNanv: {self.navn}\n\tAlder: {self.alder}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall biletter: {self.antallBiletter}\n\tTotal pris: {self.bergnPris()}')
+
+
+class Sal:
+    def __init__(self, salNavn, stykke, antallPlasser) -> None:
+        self.salNavn = salNavn
+        self.stykke = stykke
+        self.antallPlasser = antallPlasser
+
+
+class Teater(Biletter):
+    Datoer = []
+    for i in range(15):
+        Datoer.append(datetime.date(2024,2,1)+datetime.timedelta(i))
+    print(Datoer[14].strftime('%A'))
+
+
+    Gold = Sal('Gold','De elendige',150)
+    Sølv = Sal('Sølv','Vilanden',100)
+
+    antallPlasserIgjenGold = [150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150]
+    antallPlasserIgjenSølv = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100] 
+    def __init__(self):
+        self.bestilinger = []
+
+    
+    def legTilBestiling(self, navn, alder, telefonNr, epost, stykke: str, dato: str,erStudent:str='nei', antallBiletter: int = 1):
+
+        alder = alder
+        datoSplit = dato.split(',')
+        datoIndex = Teater.Datoer.index(datetime.date(int(datoSplit[0]),int(datoSplit[1]),int(datoSplit[2])))
+
+        if(stykke == Teater.Gold.stykke):
+            if Teater.antallPlasserIgjenGold[datoIndex]-antallBiletter >= 0:
+                Teater.antallPlasserIgjenGold[datoIndex]-= antallBiletter
+            else:
+                print('ikke mer tilgjenlig plass i tilhørende sal denne datoen')
+                return 
+        elif(stykke == Teater.Sølv.stykke):
+            if Teater.antallPlasserIgjenSølv[datoIndex]-antallBiletter >= 0:
+                Teater.antallPlasserIgjenSølv[datoIndex]-= antallBiletter
+            else:
+                print('ikke mer tilgjenlig plass i tilhørende sal denne datoen')
+                return 
+        
+        if(antallBiletter>1):
+            self.bestilinger.append(GruppeBiletter(navn, alder, telefonNr,stykke, epost, dato,stykke, antallBiletter))
+        elif antallBiletter == 1:
+            self.bestilinger.append(Biletter(navn, alder, telefonNr,stykke, epost, dato,stykke, antallBiletter))
+    
+    def visAntallPlasserIgjen(self, sal:str):
+        if sal.capitalize() == 'Gull':
+            print(Teater.antallPlasserIgjenGold)
+        if sal.capitalize() == 'Sølv':
+            print(Teater.antallPlasserIgjenGold)
+    
+    def totaltTjent(self):
+        tjent = 0
+        for i in range(len(self.bestilinger)):
+            tjent+=self.bestilinger[i].bergnPris()
+        return tjent
+    
+Teater1 = Teater()
+Teater1.legTilBestiling('Yonatan Moknen', 18, 48342012, 'Nanikanblidet@gmail.com', 'De elendige', '2024,02,05','nei')
+print(Teater1.bestilinger[0].visKvittering())
+print(Teater1.antallPlasserIgjenGold())
+
