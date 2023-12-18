@@ -125,9 +125,6 @@ class Bilett(Person):
         print(f'Biletten under {self.navn} er følgende:\n\tNanv: {self.navn}\n\tAlder: {self.alder}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall bilett: {self.antallBilett}\n\tTotal pris: {self.bergnPris()}')
 
 class GruppeBilett(Bilett):
-    idAlene = 0
-    idGruppe = 0
-    totPris = 0
     def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBilett:int=1):
         super().__init__(navn, alder, telefonNr, epost,stykke,dato,erStudent,antallBilett)
         self.pris = GruppeBilett.totPris
