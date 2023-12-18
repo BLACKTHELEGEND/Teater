@@ -13,7 +13,7 @@ class Biletter(Person):
 
 
 
-class Person:
+class Person: 
     def __init__(self, navn, adresse, telefon, epost, alder, student=False):
         self.navn = navn
         self.adresse = adresse
