@@ -75,13 +75,13 @@ class Person:
         self.telefonNr = telefonNr
         self.epost = epost
 
-class Biletter(Person):
+class Bilett(Person):
     idAlene = 0
     idGruppe = 0
-    def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBiletter:int=1):
+    def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBilett:int=1):
         super().__init__(navn, alder, telefonNr, epost)
         self.ordinarPris = 300
-        self.antallBiletter = antallBiletter
+        self.antallBilett = antallBilett
         self.dato = dato
         self.erStudent = erStudent
         self.stykke = stykke
@@ -89,7 +89,7 @@ class Biletter(Person):
 
 
     def bergnPris(self):
-        if self.antallBiletter == 1:
+        if self.antallBilett == 1:
             rabatt = 1
             if self.alder < 10:
                 rabatt -= 0.5
@@ -100,7 +100,7 @@ class Biletter(Person):
             
             self.pris = self.ordinarPris*rabatt
             return self.pris
-        elif self.antallBiletter > 1:
+        elif self.antallBilett > 1:
             pris = 0
 
             rabattP = 1
@@ -112,7 +112,7 @@ class Biletter(Person):
                 rabattP -=0.2
             pris += self.ordinarPris*rabattP
 
-            for i in range(2,self.antallBiletter+1):
+            for i in range(2,self.antallBilett+1):
                 Alder_erStudent = int(input(f'Hei skriv alderen til person{i}: '))
                 rabatt = 1
                 if Alder_erStudent < 10:
@@ -124,15 +124,15 @@ class Biletter(Person):
             return self.pris
     
     def visKvittering(self):
-        print(f'Biletten under {self.navn} er følgende:\n\tNanv: {self.navn}\n\tAlder: {self.alder}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall biletter: {self.antallBiletter}\n\tTotal pris: {self.bergnPris()}')
+        print(f'Biletten under {self.navn} er følgende:\n\tNanv: {self.navn}\n\tAlder: {self.alder}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall bilett: {self.antallBilett}\n\tTotal pris: {self.bergnPris()}')
 
-class GruppeBiletter(Biletter):
+class GruppeBilett(Bilett):
     idAlene = 0
     idGruppe = 0
     totPris = 0
-    def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBiletter:int=1):
-        super().__init__(navn, alder, telefonNr, epost,stykke,dato,erStudent,antallBiletter)
-        self.pris = GruppeBiletter.totPris
+    def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBilett:int=1):
+        super().__init__(navn, alder, telefonNr, epost,stykke,dato,erStudent,antallBilett)
+        self.pris = GruppeBilett.totPris
 
 
     def bergnPris(self):
@@ -147,7 +147,7 @@ class GruppeBiletter(Biletter):
                 rabattP -=0.2
             pris += self.ordinarPris*rabattP
 
-            for i in range(2,self.antallBiletter+1):
+            for i in range(2,self.antallBilett+1):
                 Alder_erStudent = int(input(f'Hei skriv alderen til person{i}: '))
                 rabatt = 1
                 if Alder_erStudent < 10:
@@ -155,11 +155,11 @@ class GruppeBiletter(Biletter):
                 elif Alder_erStudent > 67:
                     rabatt -= 0.3
                 pris += self.ordinarPris*rabatt
-            GruppeBiletter.totPris = pris
+            GruppeBilett.totPris = pris
             return self.pris
     
     def visKvittering(self):
-        print(f'Biletten under {self.navn} er følgende:\n\tNanv: {self.navn}\n\tAlder: {self.alder}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall biletter: {self.antallBiletter}\n\tTotal pris: {self.bergnPris()}')
+        print(f'Biletten under {self.navn} er følgende:\n\tNanv: {self.navn}\n\tAlder: {self.alder}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall bilett: {self.antallBilett}\n\tTotal pris: {self.bergnPris()}')
 
 
 class Sal:
@@ -169,7 +169,7 @@ class Sal:
         self.antallPlasser = antallPlasser
 
 
-class Teater(Biletter):
+class Teater(Bilett):
     Datoer = []
     for i in range(15):
         Datoer.append(datetime.date(2024,2,1)+datetime.timedelta(i))
@@ -185,29 +185,29 @@ class Teater(Biletter):
         self.bestilinger = []
 
     
-    def legTilBestiling(self, navn, alder, telefonNr, epost, stykke: str, dato: str,erStudent:str='nei', antallBiletter: int = 1):
+    def legTilBestiling(self, navn, alder, telefonNr, epost, stykke: str, dato: str,erStudent:str='nei', antallBilett: int = 1):
 
         alder = alder
         datoSplit = dato.split(',')
         datoIndex = Teater.Datoer.index(datetime.date(int(datoSplit[0]),int(datoSplit[1]),int(datoSplit[2])))
 
         if(stykke == Teater.Gold.stykke):
-            if Teater.antallPlasserIgjenGold[datoIndex]-antallBiletter >= 0:
-                Teater.antallPlasserIgjenGold[datoIndex]-= antallBiletter
+            if Teater.antallPlasserIgjenGold[datoIndex]-antallBilett >= 0:
+                Teater.antallPlasserIgjenGold[datoIndex]-= antallBilett
             else:
                 print('ikke mer tilgjenlig plass i tilhørende sal denne datoen')
                 return 
         elif(stykke == Teater.Sølv.stykke):
-            if Teater.antallPlasserIgjenSølv[datoIndex]-antallBiletter >= 0:
-                Teater.antallPlasserIgjenSølv[datoIndex]-= antallBiletter
+            if Teater.antallPlasserIgjenSølv[datoIndex]-antallBilett >= 0:
+                Teater.antallPlasserIgjenSølv[datoIndex]-= antallBilett
             else:
                 print('ikke mer tilgjenlig plass i tilhørende sal denne datoen')
                 return 
         
-        if(antallBiletter>1):
-            self.bestilinger.append(GruppeBiletter(navn, alder, telefonNr,stykke, epost, dato,stykke, antallBiletter))
-        elif antallBiletter == 1:
-            self.bestilinger.append(Biletter(navn, alder, telefonNr,stykke, epost, dato,stykke, antallBiletter))
+        if(antallBilett>1):
+            self.bestilinger.append(GruppeBilett(navn, alder, telefonNr,stykke, epost, dato,stykke, antallBilett))
+        elif antallBilett == 1:
+            self.bestilinger.append(Bilett(navn, alder, telefonNr,stykke, epost, dato,stykke, antallBilett))
     
     def visAntallPlasserIgjen(self, sal:str):
         if sal.capitalize() == 'Gull':
