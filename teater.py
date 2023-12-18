@@ -219,5 +219,5 @@ class Teater(Bilett):
 Teater1 = Teater()
 Teater1.legTilBestiling('Yonatan Moknen', 18, 48342012, 'Nanikanblidet@gmail.com', 'De elendige', '2024,02,05')
 print(Teater1.bestilinger[0].visKvittering())
-print(Teater1.antallPlasserIgjenGold())
+print(Teater1.antallPlasserIgjenGold)
 
