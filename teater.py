@@ -76,8 +76,6 @@ class Person:
         self.epost = epost
 
 class Bilett(Person):
-    idAlene = 0
-    idGruppe = 0
     def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBilett:int=1):
         super().__init__(navn, alder, telefonNr, epost)
         self.ordinarPris = 300
