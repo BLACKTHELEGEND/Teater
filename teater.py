@@ -68,6 +68,7 @@ class Sal:
 
 import datetime
 
+
 class Person:
     def __init__(self, navn, alder, telefonNr, epost):
         self.navn = navn
@@ -122,39 +123,12 @@ class Bilett(Person):
             return self.pris
     
     def visKvittering(self):
-        print(f'Biletten under {self.navn} er følgende:\n\tNanv: {self.navn}\n\tAlder: {self.alder}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall bilett: {self.antallBilett}\n\tTotal pris: {self.bergnPris()}')
+        print(f'Biletten under {self.navn} er følgende:\n\tNavn: {self.navn}\n\tAlder: {self.alder} år\n\tEpost: {self.epost}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall bilett: {self.antallBilett}\n\tTotal pris: {self.bergnPris()} kr')
 
 class GruppeBilett(Bilett):
     def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBilett:int=1):
         super().__init__(navn, alder, telefonNr, epost,stykke,dato,erStudent,antallBilett)
         self.pris = GruppeBilett.totPris
-
-
-    def bergnPris(self):
-            pris = 0
-
-            rabattP = 1
-            if self.alder < 10:
-                rabattP -= 0.5
-            elif self.alder > 67:
-                rabattP -= 0.3
-            elif self.erStudent == 'ja':
-                rabattP -=0.2
-            pris += self.ordinarPris*rabattP
-
-            for i in range(2,self.antallBilett+1):
-                Alder_erStudent = int(input(f'Hei skriv alderen til person{i}: '))
-                rabatt = 1
-                if Alder_erStudent < 10:
-                    rabatt -= 0.5
-                elif Alder_erStudent > 67:
-                    rabatt -= 0.3
-                pris += self.ordinarPris*rabatt
-            GruppeBilett.totPris = pris
-            return self.pris
-    
-    def visKvittering(self):
-        print(f'Biletten under {self.navn} er følgende:\n\tNanv: {self.navn}\n\tAlder: {self.alder}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall bilett: {self.antallBilett}\n\tTotal pris: {self.bergnPris()}')
 
 
 class Sal:
@@ -164,7 +138,7 @@ class Sal:
         self.antallPlasser = antallPlasser
 
 
-class Teater(Bilett):
+class Teater:
     Datoer = []
     for i in range(15):
         Datoer.append(datetime.date(2024,2,1)+datetime.timedelta(i))
@@ -200,9 +174,9 @@ class Teater(Bilett):
                 return 
         
         if(antallBilett>1):
-            self.bestilinger.append(GruppeBilett(navn, alder, telefonNr,stykke, epost, dato,stykke, antallBilett))
+            self.bestilinger.append(GruppeBilett(navn, alder, telefonNr,epost,stykke,dato,erStudent,antallBilett))
         elif antallBilett == 1:
-            self.bestilinger.append(Bilett(navn, alder, telefonNr,stykke, epost, dato,stykke, antallBilett))
+            self.bestilinger.append(Bilett(navn, alder, telefonNr,epost,stykke,dato,erStudent,antallBilett))
     
     def visAntallPlasserIgjen(self, sal:str):
         if sal.capitalize() == 'Gull':
@@ -217,7 +191,8 @@ class Teater(Bilett):
         return tjent
     
 Teater1 = Teater()
-Teater1.legTilBestiling('Yonatan Moknen', 18, 48342012, 'Nanikanblidet@gmail.com', 'De elendige', '2024,02,05')
+Teater1.legTilBestiling('Augustas',9,2143216942,'just@.aserkul.com','De elendige','2024,02,04')
 print(Teater1.bestilinger[0].visKvittering())
 print(Teater1.antallPlasserIgjenGold)
+
 
