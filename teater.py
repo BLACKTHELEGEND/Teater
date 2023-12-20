@@ -1,5 +1,5 @@
 import datetime
-import it 
+import it#Dette er en biblotek fra min folder, hvor jeg f.eks hener ut funksjonen riktigInputInt_float_eller_int()
 from pick import pick
 import time
 import os
