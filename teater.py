@@ -5,7 +5,7 @@ import time
 import os
 
 os.system('cls')
- 
+
 class Person:
     def __init__(self, navn, alder, telefonNr, epost, adresse):
         self.navn = navn
@@ -130,9 +130,12 @@ class Teater:
 Teater1 = Teater()
 
 while True:
+    #Denne delen skal da imitate en "meny" på en nettside go kunden kan da navigerer til ønsket funksjon og (Annet kan være f.eks: vis antall plasser det er på hver stykke i datoen fremover eller noe sånnt)
     titleHoved = 'Meny: '
     menyInnhold = ['Leggtil bestilling', 'Vis kvitering', 'Annet']
     menyvalgt, index = pick(menyInnhold, titleHoved, indicator='=>', default_index=0)
+
+    #Hvis kunden velger leggtil bestiling så kan de leggtil en bestiling
     if menyvalgt == 'Leggtil bestilling':
         while True:
             title = 'Ønsker du å registrer en ny bestilling: '
@@ -150,21 +153,25 @@ while True:
                 adresse = input('\tAdresse: ')
 
                 if 18<=alder and alder <=35:
-                    erStudent, erStudentIndex = pick(['Ja','Nei'],'Er du en student?:')
-
+                    erStudent, erStudentIndex = pick(['Ja','Nei'],'Er du en stuent?:')
+                
+                #henter inn antall bileter kunden ønsker å kjøpe
                 antallBilett = it.riktigInputInt_float_eller_int('int','Hvor mange biletter ønsker du å bestille','Kunn heltall er godskjent. Prøv igjen',1,150)
 
+                #henter inn stykke kunden ønsker å se, her vil det være en droppdown
                 valgStykkListe = ['\tDe elendige', '\tVilanden']
                 valgStykke, stykkeIndex = pick(valgStykkListe, '\tVelg stykke du ønsker å se: ', indicator='=>', default_index=0)
                 valgStykke = valgStykke[1:len(valgStykke)-1]
 
+                #viser datoenen som det er mulig å se stykke på, denne listen med valg ekskluderer søndager
                 tilgjenligeDatoer = []
                 for i in range(14):
                     if (datetime.date(2024,2,1)+datetime.timedelta(i)).strftime('%A') != 'Sunday':
                         tilgjenligeDatoer.append(datetime.date(2024,2,1)+datetime.timedelta(i))
 
                 valgtDato, datoIndex = pick(tilgjenligeDatoer,'Dato vi har tilgjenlige framover:','=>',default_index=0)
-                #print(tilgjenligeDatoer[14].strftime('%A'))
+
+                #Denne delen har kunn et mål å det er å regne ut prisen kunden betaler både hvis det er gruppe betilling eller individuel bestiling
                 if antallBilett>1:
                     gruppe1 = GruppeBilett(navn,alder,telefonNr,epost,adresse,valgStykke,valgtDato,erStudent,antallBilett)
                     pris = gruppe1.bergnPris()
@@ -173,12 +180,11 @@ while True:
                     bestilling1 = Bilett(navn,alder,telefonNr,epost,adresse,valgStykke,valgtDato,erStudent)
                     pris = bestilling1.bergnPris()
                     
-                    
-
-                
+                """Denne delen outputer informasjonen kunden har gitt (og her får kunden muligheten til å se gjenom informasjonen å evnetuelt endre på det: Denne delen er ikke gjort ennda)"""
                 tekst2 = f'Du har gitt følgende informasjone:\n\tNavn: {navn}\n\tAlder: {alder} år\n\tEpost: {epost}\n\tStykke: {valgStykke}\n\tDato: {valgtDato}, {valgtDato.strftime("%A")}\nStemmer informasjonen'
                 valgt, valgtIndex = pick(['Ja','Nei'],tekst2,'=>',default_index=0)
 
+                #Her går koden videre med å registrerer kjøpet hvis kunden godskjener at informasjonen stemmer eller (få muligheten til å endre på det i: if valgt == 'Nei': Denne delen er heler ikke gjort ennå)
                 if valgt == 'Ja':
                     if antallBilett>1:
                         Teater1.legTilBestiling(navn,alder,telefonNr,epost,adresse,valgStykke,valgtDato,erStudent,antallBilett)
@@ -191,6 +197,7 @@ while True:
                     os.system('cls')
             elif option == options[1]:
                 break
+    #Hvis kunden velger vis kvitering så kan de søke etter sin egen kvitering via telefonnummer men her er det sikket andre tryggerer måter å søke på???
     elif menyvalgt == 'Vis kvitering':
         while True:
             telefonNr = it.riktigInputInt_float_eller_int('int','Hvilket telfon nummer er kviteringen registrert på','Nummer ikke godskjent, husk det må være hel tall! Prøv igjen.', 0,None)
@@ -214,12 +221,12 @@ while True:
         """
         datoMånde = it.riktigInputInt_float_eller_int('int','\tVelg månde','Ikke godsjent input, husk det er 12 månder i året så intervall tillat [1,12]. Prøv igjen.',1,12)
         månder = ['Januar','Februar','Mars','April','Mai','Juni','Juli','August','September','Oktober','November','Desember']
-        datoDag = it.riktigInputInt_float_eller_int('int',f'\tVelg dagsdatoen alså x\'en i (x,{månder[datoMånde-1]},2024): ','Ikke godsjent input, husk det er 28,30 eller 31 dager i en måned, basert på hvilken måned det er. Prøv igjen.',1,31)"""
+        datoDag = it.riktigInputInt_float_eller_int('int',f'\tVelg dagsdatoen alså x\'en i (x,{månder[datoMånde-1]},2024): ','Ikke godsjent input, husk det er 28,30 eller 31 dager i en måned, basert på hvilken måned det er. Prøv igjen.',1,31)
+        """
 
 
         
 
 
 
-    
-
+ 
