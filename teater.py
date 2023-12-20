@@ -1,84 +1,22 @@
-class Person:
-    def __init__(self, Navn, Alder, telefonNr, Epost):
-        self.Navn = Navn
-        self.Alder = Alder 
-        self.telefonNr = telefonNr 
-        self.Epost = Epost
- 
-class Biletter(Person):
-    def __init__(self, Navn, Alder, telefonNr, Epost, stykke:str, antallBiletter:int=1):
-        super().__init__(Navn, Alder, telefonNr, Epost)
-        self.stykke = stykke
-        self.antallBiletter = antallBiletter 
-
-
-
-class Person: 
-    def __init__(self, navn, adresse, telefon, epost, alder, student=False):
-        self.navn = navn
-        self.adresse = adresse
-        self.telefon = telefon
-        self.epost = epost
-        self.alder = alder
-        self.student = student
-        self.billetter = []
-
-    def get_rabatt(self):
-        if self.alder > 67:
-            return 0.3
-        elif self.student:
-            return 0.2
-        elif self.alder < 10:
-            return 0.5
-        else:
-            return 0
-
-class Billett:
-    def __init__(self, forestilling, kjoper):
-        self.forestilling = forestilling
-        self.kjoper = kjoper
-        self.pris = 300 * (1 - kjoper.get_rabatt())
-
-class Forestilling:
-    def __init__(self, stykke, dato):
-        self.stykke = stykke
-        self.dato = dato
-        self.billetter = []
-
-    def legg_til_billett(self, kjoper):
-        if len(self.billetter) < self.stykke.sal.kapasitet:
-            self.billetter.append(Billett(self, kjoper))
-        else:
-            print("Beklager, denne forestillingen er utsolgt.")
-
-class Stykke:
-    def __init__(self, navn, sal):
-        self.navn = navn
-        self.sal = sal
-        self.forestillinger = []
-
-class Sal:
-    def __init__(self, navn, kapasitet):
-        self.navn = navn
-        self.kapasitet = kapasitet
-
-
-
-#Version 2
-
 import datetime
+import it 
+from pick import pick
+import time
+import os
 
+os.system('cls')
 
 class Person:
-    def __init__(self, navn, alder, telefonNr, epost):
+    def __init__(self, navn, alder, telefonNr, epost, adresse):
         self.navn = navn
         self.alder = alder
         self.telefonNr = telefonNr
         self.epost = epost
+        self.adresse = adresse
 
 class Bilett(Person):
-    def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBilett:int=1):
-        super().__init__(navn, alder, telefonNr, epost)
+    def __init__(self, navn:str, alder:int, telefonNr:int, epost:str,adresse:str, stykke:str, dato:str, erStudent:str = 'nei',antallBilett:int=1):
+        super().__init__(navn, alder, telefonNr, epost, adresse)
         self.ordinarPris = 300
         self.antallBilett = antallBilett
         self.dato = dato
@@ -96,40 +34,39 @@ class Bilett(Person):
                 rabatt -= 0.3
             elif self.erStudent == 'ja':
                 rabatt -=0.2
+            return self.ordinarPris*rabatt
+        
             
-            self.pris = self.ordinarPris*rabatt
-            return self.pris
-        elif self.antallBilett > 1:
-            pris = 0
-
-            rabattP = 1
-            if self.alder < 10:
-                rabattP -= 0.5
-            elif self.alder > 67:
-                rabattP -= 0.3
-            elif self.erStudent == 'ja':
-                rabattP -=0.2
-            pris += self.ordinarPris*rabattP
-
-            for i in range(2,self.antallBilett+1):
-                Alder_erStudent = int(input(f'Hei skriv alderen til person{i}: '))
-                rabatt = 1
-                if Alder_erStudent < 10:
-                    rabatt -= 0.5
-                elif Alder_erStudent > 67:
-                    rabatt -= 0.3
-                pris += self.ordinarPris*rabatt
-            self.pris = pris
-            return self.pris
     
     def visKvittering(self):
-        print(f'Biletten under {self.navn} er følgende:\n\tNavn: {self.navn}\n\tAlder: {self.alder} år\n\tEpost: {self.epost}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall bilett: {self.antallBilett}\n\tTotal pris: {self.bergnPris()} kr')
+        return f'Biletten under {self.navn} er følgende:\n\tNavn: {self.navn}\n\tAlder: {self.alder} år\n\tTelefon nummer: {self.telefonNr}\n\tEpost: {self.epost}\n\tStykke: {self.stykke}\n\tDato: {self.dato}\n\tAntall bilett: {self.antallBilett}\n\tTotal pris: {self.pris} kr\n'
 
 class GruppeBilett(Bilett):
-    totPris = 0
-    def __init__(self, navn:str, alder:int, telefonNr:int, epost:str, stykke:str, dato:str, erStudent:str = 'nei',antallBilett:int=1):
-        super().__init__(navn, alder, telefonNr, epost,stykke,dato,erStudent,antallBilett)
-        self.pris = GruppeBilett.totPris
+    def __init__(self, navn:str, alder:int, telefonNr:int, epost:str,adresse, stykke:str, dato:str, erStudent:str = 'nei',antallBilett:int=1):
+        super().__init__(navn, alder, telefonNr, epost,adresse,stykke,dato,erStudent,antallBilett)
+        self.pris = 0
+
+    def bergnPris(self):
+        pris = 0
+
+        rabattP = 1
+        if self.alder < 10:
+            rabattP -= 0.5
+        elif self.alder > 67:
+            rabattP -= 0.3
+        elif self.erStudent == 'ja':
+            rabattP -=0.2
+        pris += self.ordinarPris*rabattP
+
+        for i in range(2,self.antallBilett+1):
+            Alder_erStudent = int(input(f'Hei skriv alderen til person{i}: '))
+            rabatt = 1
+            if Alder_erStudent < 10:
+                rabatt -= 0.5
+            elif Alder_erStudent > 67:
+                rabatt -= 0.3
+            pris += self.ordinarPris*rabatt
+        return pris
 
 
 class Sal:
@@ -141,9 +78,9 @@ class Sal:
 
 class Teater:
     Datoer = []
-    for i in range(15):
+    for i in range(14):
         Datoer.append(datetime.date(2024,2,1)+datetime.timedelta(i))
-    print(Datoer[14].strftime('%A'))
+    print(Datoer[3].strftime('%A'))
 
 
     Gold = Sal('Gold','De elendige',150)
@@ -155,11 +92,10 @@ class Teater:
         self.bestilinger = []
 
     
-    def legTilBestiling(self, navn, alder, telefonNr, epost, stykke: str, dato: str,erStudent:str='nei', antallBilett: int = 1):
+    def legTilBestiling(self, navn, alder, telefonNr, epost,adresse, stykke: str, dato: str,erStudent:str='nei', antallBilett: int = 1):
 
         alder = alder
-        datoSplit = dato.split(',')
-        datoIndex = Teater.Datoer.index(datetime.date(int(datoSplit[0]),int(datoSplit[1]),int(datoSplit[2])))
+        datoIndex = Teater.Datoer.index(dato)
 
         if(stykke == Teater.Gold.stykke):
             if Teater.antallPlasserIgjenGold[datoIndex]-antallBilett >= 0:
@@ -175,9 +111,9 @@ class Teater:
                 return 
         
         if(antallBilett>1):
-            self.bestilinger.append(GruppeBilett(navn, alder, telefonNr,epost,stykke,dato,erStudent,antallBilett))
+            self.bestilinger.append(GruppeBilett(navn, alder, telefonNr,epost,adresse,stykke,dato,erStudent,antallBilett))
         elif antallBilett == 1:
-            self.bestilinger.append(Bilett(navn, alder, telefonNr,epost,stykke,dato,erStudent,antallBilett))
+            self.bestilinger.append(Bilett(navn, alder, telefonNr,epost,adresse,stykke,dato,erStudent))
     
     def visAntallPlasserIgjen(self, sal:str):
         if sal.capitalize() == 'Gull':
@@ -192,8 +128,98 @@ class Teater:
         return tjent
     
 Teater1 = Teater()
-Teater1.legTilBestiling('Augustas',9,2143216942,'just@.aserkul.com','De elendige','2024,02,04')
-print(Teater1.bestilinger[0].visKvittering())
-print(Teater1.antallPlasserIgjenGold)
 
+while True:
+    titleHoved = 'Meny: '
+    menyInnhold = ['Leggtil bestilling', 'Vis kvitering', 'Annet']
+    menyvalgt, index = pick(menyInnhold, titleHoved, indicator='=>', default_index=0)
+    if menyvalgt == 'Leggtil bestilling':
+        while True:
+            title = 'Ønsker du å registrer en ny bestilling: '
+            options = ['Ja', 'Nei']
+            option, index = pick(options, title, indicator='=>', default_index=0)
+
+            if option == options[0]:
+                print('Registrere din bestilling:')
+                navn = input('\tNavn: ')
+                alder = it.riktigInputInt_float_eller_int('int','\tAlder','Alder ikke godskjent, husk det må være hel tall! Prøv igjen.', 0,None)
+
+                telefonNr = it.riktigInputInt_float_eller_int('int','\tTelefon nummer','Nummer ikke godskjent, husk det må være hel tall! Prøv igjen.', 0,None)
+
+                epost = input('\tepost: ')
+                adresse = input('\tAdresse: ')
+
+                if 18<=alder and alder <=35:
+                    erStudent, erStudentIndex = pick(['Ja','Nei'],'Er du en stuent?:')
+
+                antallBilett = it.riktigInputInt_float_eller_int('int','Hvor mange biletter ønsker du å bestille','Kunn heltall er godskjent. Prøv igjen',1,150)
+
+                valgStykkListe = ['\tDe elendige', '\tVilanden']
+                valgStykke, stykkeIndex = pick(valgStykkListe, '\tVelg stykke du ønsker å se: ', indicator='=>', default_index=0)
+                valgStykke = valgStykke[1:len(valgStykke)-1]
+
+                tilgjenligeDatoer = []
+                for i in range(14):
+                    if (datetime.date(2024,2,1)+datetime.timedelta(i)).strftime('%A') != 'Sunday':
+                        tilgjenligeDatoer.append(datetime.date(2024,2,1)+datetime.timedelta(i))
+
+                valgtDato, datoIndex = pick(tilgjenligeDatoer,'Dato vi har tilgjenlige framover:','=>',default_index=0)
+                #print(tilgjenligeDatoer[14].strftime('%A'))
+                if antallBilett>1:
+                    gruppe1 = GruppeBilett(navn,alder,telefonNr,epost,adresse,valgStykke,valgtDato,erStudent,antallBilett)
+                    pris = gruppe1.bergnPris()
+                    os.system('cls')
+                else:
+                    bestilling1 = Bilett(navn,alder,telefonNr,epost,adresse,valgStykke,valgtDato,erStudent)
+                    pris = bestilling1.bergnPris()
+                    
+                    
+
+                
+                tekst2 = f'Du har gitt følgende informasjone:\n\tNavn: {navn}\n\tAlder: {alder} år\n\tEpost: {epost}\n\tStykke: {valgStykke}\n\tDato: {valgtDato}, {valgtDato.strftime("%A")}\nStemmer informasjonen'
+                valgt, valgtIndex = pick(['Ja','Nei'],tekst2,'=>',default_index=0)
+
+                if valgt == 'Ja':
+                    if antallBilett>1:
+                        Teater1.legTilBestiling(navn,alder,telefonNr,epost,adresse,valgStykke,valgtDato,erStudent,antallBilett)
+                        Teater1.bestilinger[-1].pris = pris
+                    else:
+                        Teater1.legTilBestiling(navn,alder,telefonNr,epost,adresse,valgStykke,valgtDato,erStudent)
+                        Teater1.bestilinger[-1].pris = pris
+                    print('Takk for din bestiling den er lagt inn.')    
+                    time.sleep(3)
+                    os.system('cls')
+            elif option == options[1]:
+                break
+    elif menyvalgt == 'Vis kvitering':
+        while True:
+            telefonNr = it.riktigInputInt_float_eller_int('int','Hvilket telfon nummer er kviteringen registrert på','Nummer ikke godskjent, husk det må være hel tall! Prøv igjen.', 0,None)
+            alleKviteringer = ''
+            for i in Teater1.bestilinger:
+                if i.telefonNr == telefonNr:
+                    alleKviteringer += i.visKvittering()
+
+            valger2 = ['Ferdig', 'Finn ny kvitering']
+            valgt2, valgtIndex2 = pick(valger2,alleKviteringer,'=>',default_index=0)
+
+            if valgt2 == 'Ferdig':
+                os.system('cls')
+                break
+            elif valgt2 == 'Finn ny kvitering':
+                os.system('cls')
+                continue
+        
+
+
+        """
+        datoMånde = it.riktigInputInt_float_eller_int('int','\tVelg månde','Ikke godsjent input, husk det er 12 månder i året så intervall tillat [1,12]. Prøv igjen.',1,12)
+        månder = ['Januar','Februar','Mars','April','Mai','Juni','Juli','August','September','Oktober','November','Desember']
+        datoDag = it.riktigInputInt_float_eller_int('int',f'\tVelg dagsdatoen alså x\'en i (x,{månder[datoMånde-1]},2024): ','Ikke godsjent input, husk det er 28,30 eller 31 dager i en måned, basert på hvilken måned det er. Prøv igjen.',1,31)"""
+
+
+        
+
+
+
+    
 
