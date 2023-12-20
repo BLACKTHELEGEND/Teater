@@ -5,7 +5,7 @@ import time
 import os
 
 os.system('cls')
-
+ 
 class Person:
     def __init__(self, navn, alder, telefonNr, epost, adresse):
         self.navn = navn
