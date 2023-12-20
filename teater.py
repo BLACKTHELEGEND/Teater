@@ -150,7 +150,7 @@ while True:
                 adresse = input('\tAdresse: ')
 
                 if 18<=alder and alder <=35:
-                    erStudent, erStudentIndex = pick(['Ja','Nei'],'Er du en stuent?:')
+                    erStudent, erStudentIndex = pick(['Ja','Nei'],'Er du en student?:')
 
                 antallBilett = it.riktigInputInt_float_eller_int('int','Hvor mange biletter ønsker du å bestille','Kunn heltall er godskjent. Prøv igjen',1,150)
 
