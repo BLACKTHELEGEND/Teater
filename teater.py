@@ -69,7 +69,7 @@ class Bilett(Person):
 
 #Sal klasse
 class Sal:
-    def __init__(self, salNavn, stykke, antallPlasser) -> None:
+    def __init__(self, salNavn:str, stykke:str, antallPlasser:int) -> None:
         self.salNavn = salNavn
         self.stykke = stykke
         self.antallPlasser = antallPlasser
@@ -97,7 +97,7 @@ class Teater:
         self.oppstart = True
 
     
-    def legTilBestiling(self, navn, alder, telefonNr, epost,adresse, stykke: str, dato: str,erStudent:str='nei', antallBilett: int = 1):
+    def legTilBestiling(self, navn:str, alder:int, telefonNr:int, epost:str, adresse:str, stykke:str, dato: str,erStudent:str='nei', antallBilett: int = 1):
 
         alder = alder
         datoIndex = Teater.Datoer.index(dato)
