@@ -1,6 +1,6 @@
 import datetime
 import it  
-from pick import pick
+from pick import pick 
 import time
 import os
 import json
