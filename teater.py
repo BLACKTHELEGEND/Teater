@@ -5,7 +5,7 @@ import time
 import os
 import json
 
- 
+
 os.system('cls')
 
 #Person classe
@@ -152,8 +152,8 @@ for i in data2:
 
 while True:
     #Denne delen skal da imitate en "meny" på en nettside go kunden kan da navigerer til ønsket funksjon og (Annet kan være f.eks: vis antall plasser det er på hver stykke i datoen fremover eller noe sånnt)
-    titleHoved = 'Meny: '
-    menyInnhold = ['Leggtil bestilling', 'Vis kvitering', 'Ledige datoer']
+    titleHoved = 'Hva vi tilbyr: \n\tDe elendige:\n\t\tSal: Gull\n\t\tAntall seter: 150\n\tVilanden:\n\t\tSal: Sølv\n\t\tAntall seter: 100\nPriser\n\tVoksen: 300 kr\n\tHonnør: 210 kr, defineres som individer over 67år.\n\tStudent: 240 kr, definers som studenter fra og til og med 18år til 30år\n\tBarn: 150 kr, defineres som individer under 10år \nMeny: '
+    menyInnhold = ['Leggtil bestilling', 'Vis kvitering', 'Ledig datoer']
     menyvalgt, index = pick(menyInnhold, titleHoved, indicator='=>', default_index=0)
 
     #Hvis kunden velger leggtil bestiling så kan de leggtil en bestiling
@@ -273,4 +273,6 @@ while True:
                 break
 
 
-    
+        
+        
+        
