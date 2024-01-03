@@ -5,7 +5,7 @@ import time
 import os
 import json
 
-
+ 
 os.system('cls')
 
 #Person classe
