@@ -11,7 +11,7 @@ import random
 os.system('cls')
  
  
-
+ 
 
 #Person classe
 class Person:
