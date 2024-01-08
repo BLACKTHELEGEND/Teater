@@ -192,11 +192,12 @@ for i in data2:
     Teater1.nyestePris = i['pris']
     Teater1.legTilBestiling(i['navn'],i['alder'],i['telefonNr'],i['epost'],i['adresse'],i['stykke'],i['dato'],i['sete'],i['erStudent'], i['antallBilett'])
     Teater1.bestilinger[-1].pris = Teater1.nyestePris
-
+print(Teater1.seterSølvForAlleDager)
+time.sleep(3)
 
 while True:
     #Denne delen skal da imitate en "meny" på en nettside go kunden kan da navigerer til ønsket funksjon og (Annet kan være f.eks: vis antall plasser det er på hver stykke i datoen fremover eller noe sånnt)
-    titleHoved = f'{Teater1.seterSølvForAlleDager}Hva vi tilbyr: \n\tDe elendige:\n\t\tSal: Gull\n\t\tAntall seter: 150\n\tVilanden:\n\t\tSal: Sølv\n\t\tAntall seter: 100\nPriser\n\tVoksen: 300 kr\n\tHonnør: 210 kr, defineres som individer over 67år.\n\tStudent: 240 kr, definers som studenter fra og til og med 18år til 30år\n\tBarn: 150 kr, defineres som individer under 10år \nMeny: '
+    titleHoved = 'Hva vi tilbyr: \n\tDe elendige:\n\t\tSal: Gull\n\t\tAntall seter: 150\n\tVilanden:\n\t\tSal: Sølv\n\t\tAntall seter: 100\nPriser\n\tVoksen: 300 kr\n\tHonnør: 210 kr, defineres som individer over 67år.\n\tStudent: 240 kr, definers som studenter fra og til og med 18år til 30år\n\tBarn: 150 kr, defineres som individer under 10år \nMeny: '
     menyInnhold = ['Leggtil bestilling', 'Vis kvitering', 'Ledig datoer']
     menyvalgt, index = pick(menyInnhold, titleHoved, indicator='=>', default_index=0)
 
@@ -465,7 +466,7 @@ while True:
                                         else:
                                             break
 
-                                if (i[0] == 'Sete' and not stykkeJa) or (antallJa and not stykkeJa) or (datoEndret )  :
+                                if (i[0] == 'Sete' and not stykkeJa) or (antallJa and not stykkeJa) or (datoEndret and not stykkeJa)  :
 
                                     seterValgt.clear()
                                     forrigeSeterValgt.clear()
